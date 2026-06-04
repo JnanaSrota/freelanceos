@@ -55,4 +55,4 @@ class InvoiceItem(Base):
     rate = Column(Float)
     amount = Column(Float)
     sac_code = Column(String, default="998314")
-    invoice = relationship("Invoice", back_populates="items")
+    invoice = relationship("Invoice", back_populates="items") 
