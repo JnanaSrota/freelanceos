@@ -30,7 +30,7 @@ class LoginInput(BaseModel):
     password:str
 
 def create_token(user_id:int):
-    pay_load={
+    payload={
         "sub":str(user_id),
         "exp":datetime.utcnow() + timedelta(days=7)
     }
@@ -58,8 +58,8 @@ def register(data:RegisterInput,db:Session=Depends(get_db)):
 
 
 @router.post("/login")
-def login():
+def login(data:LoginInput,db:Session=Depends(get_db)):
     user=db.query(models.User).filter(models.User.email==data.email).first()
-    if not user or pwd_context.verify(password,data.password):
+    if not user or not pwd_context.verify(data.password,user.password):
         raise HTTPException(status_code=401, details="Invalid Credentials")
     return {"token":create_token(user.id)}
