@@ -7,6 +7,7 @@ from jose import jwt
 from app.database import get_db
 import os
 from dotenv import load_dotenv
+from app import models
 
 load_dotenv()
 
