@@ -17,12 +17,12 @@ class ClientInput(BaseModel):
 
 @router.post("/")
 def create_client(data:ClientInput,db:Session=Depends(get_db),user=Depends(get_current_user)):
-    client= models.Client( user_id=user.id
-    name=data.name
-    email=data.email
-    gstin=data.gstin
-    state_code=data.state_code
-    tds_applicable=data.tds_applicable
+    client= models.Client( user_id=user.id,
+    name=data.name,
+    email=data.email,
+    gstin=data.gstin,
+    state_code=data.state_code,
+    tds_applicable=data.tds_applicable,
     is_foreign=data.is_foreign)
     db.add(client)
     db.commt()
@@ -37,7 +37,7 @@ def get_client(db:Session=Depends(get_db),user=Depends(get_current_user)):
 def delete_client(client_id:int,db:Session=Depends(get_db),user=Depends(get_current_user)):
     client=db.query(models.Client).filter(
         models.Client.id==client_id,
-        models.Client.user_id=user.id
+        models.Client.user_id==user.id
     ).first()
     if not client:
         raise HTTPException(status_code=401,detail="Client Not Found!")
