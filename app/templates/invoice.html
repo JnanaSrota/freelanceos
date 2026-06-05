@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
+  .header { display: flex; justify-content: space-between; margin-bottom: 40px; }
+  .company { font-size: 24px; font-weight: bold; color: #2563eb; }
+  .invoice-title { font-size: 32px; color: #888; text-align: right; }
+  .invoice-number { font-size: 14px; color: #888; text-align: right; }
+  .section { margin-bottom: 30px; }
+  .section-title { font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+  .two-col { display: flex; justify-content: space-between; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th { background: #2563eb; color: white; padding: 10px; text-align: left; font-size: 13px; }
+  td { padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+  .totals { margin-top: 20px; display: flex; justify-content: flex-end; }
+  .totals-table { width: 300px; }
+  .totals-table td { border: none; padding: 5px 10px; }
+  .total-row { font-weight: bold; font-size: 16px; border-top: 2px solid #333 !important; }
+  .footer { margin-top: 60px; font-size: 12px; color: #888; text-align: center; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+  .export-badge { background: #dcfce7; color: #16a34a; }
+  .gst-note { font-size: 12px; color: #888; margin-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="company">{{ user_name }}</div>
+    {% if user_gstin %}
+    <div style="font-size:13px; margin-top:5px;">GSTIN: {{ user_gstin }}</div>
+    {% endif %}
+    <div style="font-size:13px;">State Code: {{ user_state }}</div>
+  </div>
+  <div>
+    <div class="invoice-title">INVOICE</div>
+    <div class="invoice-number">{{ invoice_number }}</div>
+    {% if export %}
+    <div style="margin-top:8px;"><span class="badge export-badge">Export of Services</span></div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="two-col">
+  <div class="section">
+    <div class="section-title">Billed To</div>
+    <div style="font-weight:bold;">{{ client_name }}</div>
+    <div style="font-size:13px;">{{ client_email }}</div>
+    {% if client_gstin %}
+    <div style="font-size:13px;">GSTIN: {{ client_gstin }}</div>
+    {% endif %}
+  </div>
+  <div class="section" style="text-align:right;">
+    <div class="section-title">Invoice Details</div>
+    <div style="font-size:13px;">Date: {{ invoice_date }}</div>
+    <div style="font-size:13px;">Due: {{ due_date }}</div>
+    <div style="font-size:13px;">SAC: 998314</div>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>SAC</th>
+      <th>Qty</th>
+      <th>Rate (₹)</th>
+      <th>Amount (₹)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td>{{ item.description }}</td>
+      <td>{{ item.sac_code }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ "{:,.2f}".format(item.rate) }}</td>
+      <td>{{ "{:,.2f}".format(item.amount) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="totals">
+  <table class="totals-table">
+    <tr><td>Subtotal</td><td style="text-align:right;">₹{{ "{:,.2f}".format(subtotal) }}</td></tr>
+    {% if cgst > 0 %}
+    <tr><td>CGST (9%)</td><td style="text-align:right;">₹{{ "{:,.2f}".format(cgst) }}</td></tr>
+    <tr><td>SGST (9%)</td><td style="text-align:right;">₹{{ "{:,.2f}".format(sgst) }}</td></tr>
+    {% endif %}
+    {% if igst > 0 %}
+    <tr><td>IGST (18%)</td><td style="text-align:right;">₹{{ "{:,.2f}".format(igst) }}</td></tr>
+    {% endif %}
+    {% if tds_deducted > 0 %}
+    <tr><td>TDS Deducted (10%)</td><td style="text-align:right; color:#dc2626;">- ₹{{ "{:,.2f}".format(tds_deducted) }}</td></tr>
+    {% endif %}
+    <tr class="total-row"><td>Total Payable</td><td style="text-align:right;">₹{{ "{:,.2f}".format(total_payable) }}</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  Thank you for your business. Please transfer to the bank account shared separately.
+</div>
+
+</body>
+</html>
