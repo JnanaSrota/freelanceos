@@ -56,3 +56,12 @@ class InvoiceItem(Base):
     amount = Column(Float)
     sac_code = Column(String, default="998314")
     invoice = relationship("Invoice", back_populates="items") 
+
+class TaxPayment(Base):
+    __tablename__ = "tax_payments"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    quarter = Column(String)
+    amount_paid = Column(Float)
+    payment_date = Column(Date)
+    challan_number = Column(String)
