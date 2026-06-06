@@ -54,7 +54,8 @@ def register(data:RegisterInput,db:Session=Depends(get_db)):
     db.add(user)
     db.commit()
     db.refresh(user)
-    return {"message":"Registered Successfully"}
+    return {"message":"Registered Successfully","token": create_token(user.id)}
+ 
 
 
 @router.post("/login")
