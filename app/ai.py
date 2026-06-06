@@ -5,13 +5,13 @@ import os
 import json
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-router=APIRouter()
+router = APIRouter()
 
 @router.post("/parse-invoice")
-def parse_invoice(prompt:dict, user=Depends(get_current_user)):
-    model=genai.GenerativeModel("gemini-1.5-flash")
-
-    response=model.generate_content(f"""
+def parse_invoice(prompt: dict, user=Depends(get_current_user)):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    
+    response = model.generate_content(f"""
     Extract invoice details from this text and return ONLY valid JSON.
     No explanation, no markdown, just JSON.
     
@@ -29,6 +29,7 @@ def parse_invoice(prompt:dict, user=Depends(get_current_user)):
         ]
     }}
     """)
-    raw=response.text.strip()
-    raw=raw.replace("```json", "").replace("```", "").strip()
+    
+    raw = response.text.strip()
+    raw = raw.replace("```json", "").replace("```", "").strip()
     return json.loads(raw)
