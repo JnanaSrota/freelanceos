@@ -103,6 +103,20 @@
     <!-- Invoices Page -->
     <div id="page-invoices" class="page">
       <div class="page-title">Invoices</div>
+      <div class="card" style="margin-bottom:20px;">
+  <h3 style="margin-bottom:12px;">AI Invoice Assistant</h3>
+  <div style="display:flex;gap:12px;">
+    <input 
+      type="text" 
+      id="ai-prompt" 
+      placeholder="e.g. Invoice Rahul for 3 weeks React work at 15000 per week"
+      style="flex:1;margin:0;"
+    />
+    <button class="btn-primary" style="width:auto;padding:10px 20px;" onclick="aiParse()">
+      Generate
+    </button>
+  </div>
+</div>
       <div class="card">
         <h3 style="margin-bottom:16px;">Create Invoice</h3>
         <div class="form-row">

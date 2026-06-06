@@ -96,3 +96,41 @@ async function markPaid(id) {
   })
   loadInvoicesPage()
 }
+
+async function aiParse() {
+  const prompt = document.getElementById('ai-prompt').value
+  if (!prompt) return
+
+  const res = await fetch(`${API}/ai/parse-invoice`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify({ text: prompt })
+  })
+
+  const data = await res.json()
+
+  // Auto-fill the invoice form
+  if (data.items && data.items.length > 0) {
+    const rows = document.querySelectorAll('.inv-item')
+    data.items.forEach((item, index) => {
+      if (index > 0) addItemRow()
+      const allRows = document.querySelectorAll('.inv-item')
+      allRows[index].querySelector('.item-desc').value = item.description
+      allRows[index].querySelector('.item-qty').value = item.quantity
+      allRows[index].querySelector('.item-rate').value = item.rate
+    })
+  }
+
+  // Match client name to dropdown
+  if (data.client_name) {
+    const select = document.getElementById('inv-client')
+    for (let option of select.options) {
+      if (option.text.toLowerCase().includes(data.client_name.toLowerCase())) {
+        select.value = option.value
+        break
+      }
+    }
+  }
+
+  document.getElementById('ai-prompt').value = ''
+}
