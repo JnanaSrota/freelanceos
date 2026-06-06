@@ -1,4 +1,4 @@
-const API = 'http://127.0.0.1:8000'
+const API = 'https://freelanceos-sbp6.onrender.com'
 
 function switchTab(tab) {
   document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none'
