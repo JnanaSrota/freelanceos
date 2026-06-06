@@ -9,7 +9,7 @@ router = APIRouter()
 
 @router.post("/parse-invoice")
 def parse_invoice(prompt: dict, user=Depends(get_current_user)):
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     
     response = model.generate_content(f"""
     Extract invoice details from this text and return ONLY valid JSON.
