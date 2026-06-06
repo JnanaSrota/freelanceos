@@ -1,4 +1,4 @@
-import google.generativeai as genai
+from google import genai
 from fastapi import APIRouter, Depends
 from app.dependencies import get_current_user
 import os
