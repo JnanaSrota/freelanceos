@@ -18,7 +18,7 @@ async function login() {
   const data = await res.json()
   if (res.ok) {
     localStorage.setItem('token', data.token)
-    window.location.href = '/app/dashboard.html'
+    window.location.href = '/dashboard.html'
   } else {
     document.getElementById('auth-error').textContent = data.detail
   }

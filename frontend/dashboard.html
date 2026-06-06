@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FreelanceOS — Dashboard</title>
-  <link rel="stylesheet" href="/app/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
@@ -181,13 +181,13 @@
   </div>
 </div>
 
-<script src="/app/js/clients.js"></script>
-<script src="/app/js/invoices.js"></script>
-<script src="/app/js/tax.js"></script>
+<script src="/js/clients.js"></script>
+<script src="/js/invoices.js"></script>
+<script src="/js/tax.js"></script>
 <script>
   const API = 'http://127.0.0.1:8000'
   const token = localStorage.getItem('token')
-  if (!token) window.location.href = '/app'
+  if (!token) window.location.href = '/'
 
   function authHeaders() {
     return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -206,7 +206,7 @@
 
   function logout() {
     localStorage.removeItem('token')
-    window.location.href = '/app'
+    window.location.href = '/'
   }
 
   async function loadOverview() {
