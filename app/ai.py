@@ -1,17 +1,16 @@
-import anthropic
+from groq import Groq
 from fastapi import APIRouter, Depends
 from app.dependencies import get_current_user
 import os
 import json
 
-client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 router = APIRouter()
 
 @router.post("/parse-invoice")
 def parse_invoice(prompt: dict, user=Depends(get_current_user)):
-    message = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=500,
+    response = client.chat.completions.create(
+        model="llama3-8b-8192",
         messages=[
             {
                 "role": "user",
@@ -34,8 +33,9 @@ def parse_invoice(prompt: dict, user=Depends(get_current_user)):
                 }}
                 """
             }
-        ]
+        ],
+        temperature=0.1
     )
-    raw = message.content[0].text.strip()
+    raw = response.choices[0].message.content.strip()
     raw = raw.replace("```json", "").replace("```", "").strip()
     return json.loads(raw)
