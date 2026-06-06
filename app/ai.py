@@ -10,7 +10,7 @@ router = APIRouter()
 @router.post("/parse-invoice")
 def parse_invoice(prompt: dict, user=Depends(get_current_user)):
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-1.5-flash",
         contents=f"""
         Extract invoice details from this text and return ONLY valid JSON.
         No explanation, no markdown, just JSON.
