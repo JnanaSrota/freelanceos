@@ -25,7 +25,7 @@ def create_client(data:ClientInput,db:Session=Depends(get_db),user=Depends(get_c
     tds_applicable=data.tds_applicable,
     is_foreign=data.is_foreign)
     db.add(client)
-    db.commt()
+    db.commit()
     db.refresh(client)
     return client
 
