@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreelanceOS — Dashboard</title>
+  <link rel="stylesheet" href="/app/css/style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">FreelanceOS</div>
+    <div class="nav-item active" onclick="showPage('overview')">📊 Overview</div>
+    <div class="nav-item" onclick="showPage('clients')">👤 Clients</div>
+    <div class="nav-item" onclick="showPage('invoices')">🧾 Invoices</div>
+    <div class="nav-item" onclick="showPage('tax')">💰 Tax</div>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- Overview Page -->
+    <div id="page-overview" class="page active">
+      <div class="page-title">Overview</div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Invoiced (FY)</div>
+          <div class="stat-value" id="stat-total">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Unpaid Invoices</div>
+          <div class="stat-value danger" id="stat-unpaid">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">TDS Credited</div>
+          <div class="stat-value success" id="stat-tds">₹0</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;">Recent Invoices</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice No</th>
+              <th>Client</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="recent-invoices"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Clients Page -->
+    <div id="page-clients" class="page">
+      <div class="page-title">Clients</div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;">Add Client</h3>
+        <div class="form-row">
+          <input type="text" id="c-name" placeholder="Client Name" />
+          <input type="email" id="c-email" placeholder="Client Email" />
+        </div>
+        <div class="form-row">
+          <input type="text" id="c-gstin" placeholder="GSTIN (optional)" />
+          <input type="text" id="c-state" placeholder="State Code (e.g. 27)" />
+        </div>
+        <div class="form-row">
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;">
+            <input type="checkbox" id="c-foreign" style="width:auto;margin:0;" />
+            Foreign Client
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;">
+            <input type="checkbox" id="c-tds" style="width:auto;margin:0;" />
+            TDS Applicable
+          </label>
+        </div>
+        <button class="btn-primary" style="width:auto;padding:10px 24px;" onclick="addClient()">Add Client</button>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;">Your Clients</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>GSTIN</th>
+              <th>State</th>
+              <th>TDS</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="clients-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Invoices Page -->
+    <div id="page-invoices" class="page">
+      <div class="page-title">Invoices</div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;">Create Invoice</h3>
+        <div class="form-row">
+          <select id="inv-client"></select>
+          <input type="date" id="inv-date" />
+        </div>
+        <div class="form-row">
+          <input type="date" id="inv-due" placeholder="Due Date" />
+        </div>
+        <div id="inv-items">
+          <div class="form-row inv-item">
+            <input type="text" placeholder="Description" class="item-desc" />
+            <input type="number" placeholder="Qty" class="item-qty" />
+            <input type="number" placeholder="Rate (₹)" class="item-rate" />
+          </div>
+        </div>
+        <button class="btn-secondary" style="margin-bottom:12px;" onclick="addItemRow()">+ Add Item</button>
+        <br/>
+        <button class="btn-primary" style="width:auto;padding:10px 24px;" onclick="createInvoice()">Generate Invoice</button>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;">All Invoices</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice No</th>
+              <th>Client</th>
+              <th>Subtotal</th>
+              <th>GST</th>
+              <th>TDS</th>
+              <th>Payable</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="invoices-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tax Page -->
+    <div id="page-tax" class="page">
+      <div class="page-title">Advance Tax</div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Gross Income (FY)</div>
+          <div class="stat-value" id="tax-gross">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Estimated Tax</div>
+          <div class="stat-value" id="tax-liability">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Shortfall</div>
+          <div class="stat-value danger" id="tax-shortfall">₹0</div>
+        </div>
+      </div>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Item</th><th>Amount</th></tr>
+          </thead>
+          <tbody id="tax-table"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;">Log Tax Payment</h3>
+        <div class="form-row">
+          <input type="number" id="tax-amount" placeholder="Amount Paid (₹)" />
+          <input type="text" id="tax-challan" placeholder="Challan Number" />
+        </div>
+        <button class="btn-primary" style="width:auto;padding:10px 24px;" onclick="logPayment()">Log Payment</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/app/js/clients.js"></script>
+<script src="/app/js/invoices.js"></script>
+<script src="/app/js/tax.js"></script>
+<script>
+  const API = 'http://127.0.0.1:8000'
+  const token = localStorage.getItem('token')
+  if (!token) window.location.href = '/app'
+
+  function authHeaders() {
+    return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+  }
+
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'))
+    document.getElementById(`page-${name}`).classList.add('active')
+    event.target.classList.add('active')
+    if (name === 'overview') loadOverview()
+    if (name === 'clients') loadClients()
+    if (name === 'invoices') loadInvoicesPage()
+    if (name === 'tax') loadTax()
+  }
+
+  function logout() {
+    localStorage.removeItem('token')
+    window.location.href = '/app'
+  }
+
+  async function loadOverview() {
+    const res = await fetch(`${API}/invoices/`, { headers: authHeaders() })
+    const invoices = await res.json()
+    const total = invoices.reduce((s, i) => s + i.subtotal, 0)
+    const unpaid = invoices.filter(i => i.status === 'unpaid').length
+    const tds = invoices.reduce((s, i) => s + i.tds_deducted, 0)
+    document.getElementById('stat-total').textContent = `₹${total.toLocaleString('en-IN')}`
+    document.getElementById('stat-unpaid').textContent = unpaid
+    document.getElementById('stat-tds').textContent = `₹${tds.toLocaleString('en-IN')}`
+    const tbody = document.getElementById('recent-invoices')
+    tbody.innerHTML = invoices.slice(-5).reverse().map(i => `
+      <tr>
+        <td>${i.invoice_number}</td>
+        <td>${i.client_id}</td>
+        <td>₹${i.total_payable.toLocaleString('en-IN')}</td>
+        <td><span class="badge badge-${i.status}">${i.status}</span></td>
+        <td>${i.invoice_date}</td>
+      </tr>
+    `).join('')
+  }
+
+  loadOverview()
+</script>
+
+</body>
+</html>

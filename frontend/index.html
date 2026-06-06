@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreelanceOS — Login</title>
+  <link rel="stylesheet" href="/app/css/style.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-box">
+    <div class="logo">FreelanceOS</div>
+    <div class="tagline">GST Invoicing for Indian Freelancers</div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('login')">Login</button>
+      <button class="tab" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="login-form">
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-password" placeholder="Password" />
+      <button class="btn-primary" onclick="login()">Login</button>
+    </div>
+
+    <!-- Register Form -->
+    <div id="register-form" style="display:none;">
+      <input type="text" id="reg-name" placeholder="Full Name" />
+      <input type="email" id="reg-email" placeholder="Email" />
+      <input type="password" id="reg-password" placeholder="Password" />
+      <input type="text" id="reg-initials" placeholder="Initials (e.g. PS)" maxlength="4"/>
+      <input type="text" id="reg-state" placeholder="State Code (e.g. 27 for Maharashtra)" />
+      <input type="text" id="reg-gstin" placeholder="GSTIN (optional)" />
+      <button class="btn-primary" onclick="register()">Create Account</button>
+    </div>
+
+    <div id="auth-error" class="error-msg"></div>
+  </div>
+
+  <script src="/app/js/auth.js"></script>
+</body>
+</html>

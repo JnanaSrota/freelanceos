@@ -3,9 +3,9 @@ from pydantic import BaseModel
 from .database import get_db
 from sqlalchemy.orm import Session
 from .dependencies import get_current_user
+from typing import Optional
 
-
-router= APIrouter()
+router= APIRouter()
 
 class ClientInput(BaseModel):
     name:str
