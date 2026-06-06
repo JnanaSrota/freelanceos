@@ -6,6 +6,7 @@ from app.clients import router as clients_router
 from app.invoices import router as invoices_router
 from app.tax import router as tax_router
 from fastapi.staticfiles import StaticFiles
+from app.ai import router as ai_router
 
 models.Base.metadata.create_all(bind=engine)
 app=FastAPI()
@@ -16,6 +17,7 @@ app.include_router(auth_router,prefix="/auth")
 app.include_router(clients_router,prefix="/clients")
 app.include_router(invoices_router,prefix="/invoices")
 app.include_router(tax_router,prefix="/tax")
+app.include_router(ai_router,prefix="/ai")
 
 @app.get("/")
 def get_root():
