@@ -65,4 +65,4 @@ https://github.com/JnanaSrota/freelanceos
 https://freelanceos-neon.vercel.app
 
 ## Demo Video
-[your YouTube unlisted link]
+https://drive.google.com/file/d/1zK-76JucV_y9Jo_ViOPSoIe7lJCfC2el/view?usp=sharing
