@@ -39,6 +39,7 @@ async function register() {
     body: JSON.stringify(body)
   })
   const data = await res.json()
+  console.log("LOGIN RESPONSE", data)
   if (res.ok) {
     localStorage.setItem('token', data.token)
     window.location.href = './dashboard.html'
