@@ -1,0 +1,6 @@
+{
+  "name": "FreelanceOS",
+  "description": "Premium fintech dashboard and refined compliance workspace for modern freelancers to track clients, automate invoicing, compute TDS/GST, and optimize advance taxes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

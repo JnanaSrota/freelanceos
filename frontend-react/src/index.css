@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  /* Geometric Balance - Redefine Indigo colors to Teal-based equivalents to seamlessly map UI elements to the new aesthetic */
+  --color-indigo-50: #f0fdfa; /* Teal 50 */
+  --color-indigo-100: #ccfbf1; /* Teal 100 */
+  --color-indigo-250: #99f6e4; /* Teal 200/250 */
+  --color-indigo-200: #99f6e4; /* Teal 200 */
+  --color-indigo-300: #5eead4; /* Teal 300 */
+  --color-indigo-400: #2dd4bf; /* Teal 400 */
+  --color-indigo-500: #14b8a6; /* Teal 500 */
+  --color-indigo-600: #0d9488; /* Teal 600 */
+  --color-indigo-650: #0f766e; /* Teal 700 */
+  --color-indigo-700: #0f766e; /* Teal 700 */
+  --color-indigo-800: #115e59; /* Teal 800 */
+  --color-indigo-900: #134e4a; /* Teal 900 */
+  --color-indigo-950: #042f2e; /* Teal 950 */
+}
+
+/* Base custom styles to ensure high finish */
+html, body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+  color: #0f172a;
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbars for dashboard widgets */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Pulsing accent animation */
+@keyframes neonPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+}
+
+.pulsing-dot {
+  animation: neonPulse 2s infinite;
+}
