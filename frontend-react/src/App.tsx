@@ -210,20 +210,27 @@ const loadInvoices = async () => {
   const data = await fetchInvoices()
   if (Array.isArray(data)) {
     setInvoices(data.map((inv: any) => ({
-      id: String(inv.id),
-      clientId: String(inv.client_id),
-      invoiceNumber: inv.invoice_number,
-      date: inv.invoice_date,
-      dueDate: inv.due_date,
-      status: inv.status,
-      items: [],
-      subtotal: inv.subtotal,
-      cgst: inv.cgst,
-      sgst: inv.sgst,
-      igst: inv.igst,
-      tdsDeducted: inv.tds_deducted,
-      totalPayable: inv.total_payable
-    })))
+  id: String(inv.id),
+  clientId: String(inv.client_id),
+  clientName: '',
+  invoiceNumber: inv.invoice_number,
+  invoiceDate: inv.invoice_date,
+  date: inv.invoice_date,
+  dueDate: inv.due_date,
+  status: inv.status,
+  items: [],
+  subtotal: inv.subtotal,
+  gstRate: 0.18,
+  gstAmount: inv.cgst + inv.sgst + inv.igst,
+  tdsRate: 0.10,
+  tdsAmount: inv.tds_deducted,
+  cgst: inv.cgst,
+  sgst: inv.sgst,
+  igst: inv.igst,
+  tdsDeducted: inv.tds_deducted,
+  totalPayable: inv.total_payable,
+  notes: ''
+})))
   }
 }
 
