@@ -19,7 +19,8 @@ app.add_middleware(
         "http://localhost:5500",
         "http://127.0.0.1:5500",
         "http://192.168.0.101:3000",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://freelanceos-react.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
