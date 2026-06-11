@@ -15,12 +15,12 @@ app=FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://freelanceos-react.vercel.app",
         "https://freelanceos-neon.vercel.app",
         "http://localhost:5500",
         "http://127.0.0.1:5500",
         "http://192.168.0.101:3000",
         "http://localhost:3000",
-        "https://freelanceos-react.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
